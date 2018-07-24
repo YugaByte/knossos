@@ -200,5 +200,6 @@
   search."
   [model history]
   (let [history (canonical-history history)]
+    wrapped-model (future (wrapper model history))
     {:history history
-     :model   (wrapper model history)}))
+     :model   (deref wrapped-model 60000 model)}))
